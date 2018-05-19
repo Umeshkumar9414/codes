@@ -1,0 +1,98 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+    static int r[];
+    static int p[];
+    static boolean isSameSet(int i,int j){
+        return (findSet(i)==findSet(j));
+    }
+    static int findSet(int i){
+        if(p[i]==i)
+            return i;
+        else 
+        {
+            p[i]=findSet(p[i]);
+            return p[i];
+        }
+    }
+    static void unionSet(int x,int y){
+        if(!isSameSet(x,y)){
+            int i=findSet(x);
+            int j=findSet(y);
+            if(r[i]>=r[j]){
+                p[j]=i;
+                r[i]+=r[j]+1;
+            }else{
+                p[i]=j;
+                r[j]+=r[i]+1;
+            }
+        }
+        
+    }
+
+    // Complete the journeyToMoon function below.
+    static long journeyToMoon(int n, int[][] a) {
+        int i,j,k,l,x;
+        r=new int[n];
+        p=new int[n];
+        for(i=0;i<n;i++){r[i]=0;p[i]=i;}
+        k=a.length;
+        for(i=0;i<k;i++){
+            unionSet(a[i][0],a[i][1]);   
+        }
+        int f[]=new int[n];l=0;
+        for(i=0;i<n;i++){
+            if(p[i]==i){
+                f[l]=r[i]+1;
+                l++;
+            }
+        }
+        
+        long an=0;
+        for(i=0;i<l;i++){
+            an+=((long)f[i])*(n-f[i]);
+        }
+        return an>>1;
+
+
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] np = scanner.nextLine().split(" ");
+
+        int n = Integer.parseInt(np[0]);
+
+        int p = Integer.parseInt(np[1]);
+
+        int[][] astronaut = new int[p][2];
+
+        for (int i = 0; i < p; i++) {
+            String[] astronautRowItems = scanner.nextLine().split(" ");
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            for (int j = 0; j < 2; j++) {
+                int astronautItem = Integer.parseInt(astronautRowItems[j]);
+                astronaut[i][j] = astronautItem;
+            }
+        }
+
+        long result = journeyToMoon(n, astronaut);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
