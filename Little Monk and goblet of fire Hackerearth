@@ -1,0 +1,44 @@
+
+import java.util.*;
+
+
+class TestClass {
+    public static void main(String args[] ) throws Exception {
+       
+        //Scanner
+        Scanner sc = new Scanner(System.in);
+        int i,j,k,l,t,n;
+        t=sc.nextInt();
+        Queue<Integer> a[];
+        a=(Queue<Integer>[])new Queue[4];
+        ArrayList<Integer> s=new ArrayList<Integer>(4);
+        for(i=0;i<4;i++){
+            a[i]=new LinkedList<Integer>();
+        }
+        char c;
+        while(t-->0){
+            c=sc.next().charAt(0);
+            if(c=='E'){
+                i=sc.nextInt();
+                j=sc.nextInt();
+                if(a[i-1].size()==0){
+                    s.add(i);
+                }
+                a[i-1].add(j);
+             //   System.out.println("checking "+s);
+            }else{
+                k=s.get(0);
+            //    System.out.println(k+"be checking "+s);
+                System.out.println(k+" "+a[k-1].remove());
+                if(a[k-1].size()==0){
+                    s.remove(0);
+                }
+            //    System.out.println("af checking "+s);
+            }
+        }
+        
+        
+
+       
+    }
+}
