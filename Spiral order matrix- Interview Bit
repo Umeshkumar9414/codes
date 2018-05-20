@@ -1,0 +1,52 @@
+public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int[] spiralOrder(final int[][] a) {
+        int i=0,j=0,k=0,l,m,n;
+        n=a.length;
+        m=a[0].length;j=0;
+        int d=0;
+        boolean b[][]=new boolean[n][m];
+        l=m*n;
+        int an[]=new int[l];
+        do{
+            an[k]=a[i][j];
+            b[i][j]=true;
+            if(d==0){
+                if(j+1<m && b[i][j+1]==false){
+                    j++;
+                }else{
+                    d=1;i++;
+                    if(i>=n || b[i][j]==true)
+                        break;
+                }
+            }else if(d==1){
+                if(i+1<n && b[i+1][j]==false){
+                    i++;
+                }else{
+                    d=2;j--;
+                    if(j<0 || b[i][j]==true)
+                        break;
+                }
+            }else if(d==2){
+                if(j-1>=0 && b[i][j-1]==false){
+                    j--;
+                }else{
+                    d=3;i--;
+                    if(i<0 || b[i][j]==true)
+                        break;
+                }
+            }else if(d==3){
+                 if(i-1>=0 && b[i-1][j]==false){
+                    i--;
+                }else{
+                    d=0;j++;
+                    if(j<0 || b[i][j]==true)
+                        break;
+                }
+            }k++;
+        }while(k<l);
+        
+        return an;
+        
+    }
+}
